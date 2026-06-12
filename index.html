@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KICKS CULTURE — Step Into The Culture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #09090B;
+  --bg-secondary: #0C0C0E;
+  --bg-card: #111114;
+  --yellow: #DFE104;
+  --yellow-rgb: 223, 225, 4;
+  --white: #FFFFFF;
+  --text-gray: #999999;
+  --text-muted: #666666;
+  --text-dark: #777777;
+  --border: #333333;
+  --border-light: #262626;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Space Grotesk', sans-serif; background: var(--bg-primary); color: var(--white); overflow-x: hidden; width: 100vw; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+#canvas { width: 1440px; transform-origin: top center; position: absolute; top: 0; left: 50%; }
+.section { width: 1440px; position: relative; }
+.header { height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 80px; border-bottom: 1px solid var(--border-light); background: var(--bg-primary); }
+.logo { font-size: 22px; font-weight: 700; color: var(--yellow); }
+.nav { display: flex; gap: 48px; }
+.nav a { font-size: 12px; font-weight: 700; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+.nav a:hover { color: var(--white); }
+.header-cta { height: 35px; padding: 0 24px; background: var(--yellow); border: none; font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--bg-primary); cursor: pointer; transition: opacity 0.2s; }
+.header-cta:hover { opacity: 0.85; }
+.hero { height: 720px; display: flex; align-items: center; justify-content: space-between; padding: 0 80px; background: var(--bg-primary); }
+.hero-left { width: 540px; display: flex; flex-direction: column; gap: 40px; }
+.hero-tag { width: fit-content; height: 25px; padding: 5px 16px; background: var(--yellow); display: flex; align-items: center; }
+.hero-tag span { font-size: 10px; font-weight: 700; color: var(--bg-primary); }
+.hero-title { font-size: 96px; font-weight: 700; line-height: 1; color: var(--white); white-space: pre-line; }
+.hero-subtitle { font-size: 18px; font-weight: 400; line-height: 28px; color: #888; max-width: 412px; white-space: pre-line; }
+.hero-buttons { display: flex; gap: 16px; }
+.btn-primary { height: 49px; padding: 0 36px; background: var(--yellow); border: none; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--bg-primary); cursor: pointer; transition: opacity 0.2s; }
+.btn-primary:hover { opacity: 0.85; }
+.btn-outline { height: 49px; padding: 0 36px; background: transparent; border: 1px solid var(--yellow); font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--yellow); cursor: pointer; transition: background 0.2s; }
+.btn-outline:hover { background: rgba(var(--yellow-rgb), 0.08); }
+.hero-visual { width: 520px; height: 520px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(var(--yellow-rgb), 0.15) 0%, rgba(var(--yellow-rgb), 0.02) 100%); }
+.section-label { font-size: 11px; font-weight: 700; color: var(--yellow); }
+.section-title { font-size: 48px; font-weight: 700; line-height: 48px; color: var(--white); white-space: pre-line; }
+.timeline { background: var(--bg-secondary); padding: 120px 80px; display: flex; flex-direction: column; gap: 64px; }
+.timeline-header { display: flex; justify-content: space-between; align-items: flex-end; }
+.timeline-header-left { display: flex; flex-direction: column; gap: 12px; }
+.timeline-date { font-size: 14px; font-weight: 400; color: var(--border); }
+.timeline-cards { display: flex; gap: 12px; }
+.timeline-card { width: 200px; background: var(--bg-card); border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; }
+.timeline-card .card-visual { width: 200px; height: 220px; overflow: hidden; }
+.timeline-card .card-visual img { width: 100%; height: 100%; object-fit: cover; }
+.timeline-card .card-info { padding: 20px; }
+.card-year { font-size: 11px; font-weight: 700; color: var(--yellow); }
+.card-name { font-size: 20px; font-weight: 700; color: var(--white); display: block; }
+.card-desc { font-size: 13px; line-height: 20px; color: var(--text-dark); margin-top: 8px; }
+.street-culture { display: flex; justify-content: space-between; padding: 120px 80px; background: var(--bg-primary); }
+.street-left { width: 540px; display: flex; flex-direction: column; gap: 32px; }
+.street-body { font-size: 16px; line-height: 28px; color: var(--text-gray); }
+.quote-block { display: flex; gap: 16px; align-items: stretch; }
+.quote-line { width: 3px; background: var(--yellow); flex-shrink: 0; }
+.quote-text { font-size: 18px; font-weight: 700; line-height: 26px; color: var(--white); white-space: pre-line; }
+.street-right { width: 540px; display: flex; flex-direction: column; gap: 20px; }
+.culture-img-1 { width: 540px; height: 380px; border: 1px solid var(--border); overflow: hidden; }
+.culture-img-1 img { width: 100%; height: 100%; object-fit: cover; }
+.image-row { display: flex; gap: 20px; }
+.image-row .img { width: 260px; height: 200px; border: 1px solid var(--border); overflow: hidden; }
+.image-row .img img { width: 100%; height: 100%; object-fit: cover; }
+.collabs { background: var(--bg-secondary); padding: 120px 80px; display: flex; flex-direction: column; gap: 64px; }
+.collabs-header { display: flex; justify-content: space-between; align-items: flex-end; }
+.collabs-header-left { display: flex; flex-direction: column; gap: 12px; }
+.collabs-subtitle { font-size: 14px; line-height: 22px; color: var(--text-muted); text-align: right; white-space: pre-line; }
+.collab-grid { display: flex; gap: 20px; }
+.collab-col { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+.collab-card { background: var(--bg-card); border: 1px solid var(--border); overflow: hidden; }
+.collab-card .card-visual { width: 100%; height: 200px; overflow: hidden; }
+.collab-card .card-visual img { width: 100%; height: 100%; object-fit: cover; }
+.collab-card .card-info { padding: 24px; }
+.collab-tag { width: fit-content; padding: 4px 12px; border: 1px solid var(--yellow); }
+.collab-tag span { font-size: 9px; font-weight: 700; color: var(--yellow); }
+.collab-name { font-size: 22px; font-weight: 700; line-height: 24px; color: var(--white); white-space: pre-line; display: block; }
+.collab-desc { font-size: 13px; line-height: 20px; color: var(--text-dark); margin-top: 8px; }
+.statement { height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; background: var(--bg-primary); }
+.statement-line { width: 60px; height: 3px; background: var(--yellow); }
+.statement-quote { font-size: 36px; font-weight: 700; line-height: 42px; color: var(--white); text-align: center; max-width: 800px; white-space: pre-line; }
+.statement-attribution { font-size: 11px; font-weight: 700; color: var(--yellow); }
+.footer { background: var(--bg-secondary); border-top: 1px solid var(--border-light); padding: 80px; display: flex; flex-direction: column; gap: 60px; }
+.footer-top { display: flex; justify-content: space-between; }
+.footer-brand { display: flex; flex-direction: column; gap: 16px; }
+.footer-logo { font-size: 28px; font-weight: 700; line-height: 30px; color: var(--yellow); white-space: pre-line; }
+.footer-tagline { font-size: 13px; line-height: 20px; color: var(--text-muted); white-space: pre-line; }
+.footer-links { display: flex; gap: 80px; }
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col-title { font-size: 10px; font-weight: 700; color: var(--yellow); }
+.footer-col a { font-size: 13px; color: #888; text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.copyright { font-size: 10px; color: #444; }
+.footer-badge { padding: 6px 16px; border: 1px solid #404040; }
+.footer-badge span { font-size: 9px; font-weight: 700; color: #555; }
+@media (max-width: 1480px) { #canvas { transform-origin: top center; left: 50%; } }
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <header class="section header">
+    <div class="logo">KICKS CULTURE</div>
+    <nav class="nav">
+      <a href="#timeline">TIMELINE</a>
+      <a href="#street">STREET</a>
+      <a href="#collabs">COLLABS</a>
+      <a href="#about">ABOUT</a>
+    </nav>
+    <button class="header-cta">THE DROP</button>
+  </header>
+  <section class="section hero">
+    <div class="hero-left">
+      <div class="hero-tag"><span>SNEAKER CULTURE ARCHIVE</span></div>
+      <h1 class="hero-title">STEP INTO
+THE CULTURE</h1>
+      <p class="hero-subtitle">From court to concrete. Every sole tells a story.
+Sneakers aren't just shoes — they're identity,
+rebellion, and the pulse of the street.</p>
+      <div class="hero-buttons">
+        <a href="#timeline" class="btn-primary">EXPLORE TIMELINE</a>
+        <button class="btn-outline">WATCH FILM</button>
+      </div>
+    </div>
+    <div class="hero-visual"></div>
+  </section>
+  <section class="section timeline" id="timeline">
+    <div class="timeline-header">
+      <div class="timeline-header-left">
+        <span class="section-label">THE EVOLUTION</span>
+        <h2 class="section-title">Iconic Soles
+That Defined Decades</h2>
+      </div>
+      <span class="timeline-date">1985 — 2025</span>
+    </div>
+    <div class="timeline-cards">
+      <div class="timeline-card"><div class="card-visual"><img src="assets/images/5_31.png" alt="Air Jordan 1"></div><div class="card-info"><span class="card-year">1985</span><span class="card-name">Air Jordan 1</span><p class="card-desc">Banned by the NBA. Embraced by the world.</p></div></div>
+      <div class="timeline-card"><div class="card-visual"><img src="assets/images/5_37.png" alt="Air Force 1"></div><div class="card-info"><span class="card-year">1982</span><span class="card-name">Air Force 1</span><p class="card-desc">From hardwood to asphalt. The undisputed king.</p></div></div>
+      <div class="timeline-card"><div class="card-visual"><img src="assets/images/5_43.png" alt="Air Max 1"></div><div class="card-info"><span class="card-year">1987</span><span class="card-name">Air Max 1</span><p class="card-desc">Visible air revolution by Tinker Hatfield.</p></div></div>
+      <div class="timeline-card"><div class="card-visual"><img src="assets/images/5_49.png" alt="Ultra Boost"></div><div class="card-info"><span class="card-year">2015</span><span class="card-name">Ultra Boost</span><p class="card-desc">Kanye wore them. The world followed.</p></div></div>
+      <div class="timeline-card"><div class="card-visual"><img src="assets/images/5_55.png" alt="Travis Scott AJ1"></div><div class="card-info"><span class="card-year">2019</span><span class="card-name">Travis Scott AJ1</span><p class="card-desc">Reverse swoosh that broke the internet.</p></div></div>
+      <div class="timeline-card"><div class="card-visual"><img src="assets/images/5_61.png" alt="New Balance 990v6"></div><div class="card-info"><span class="card-year">2023</span><span class="card-name">NB 990v6</span><p class="card-desc">Dad shoe renaissance. The anti-hype hype.</p></div></div>
+    </div>
+  </section>
+  <section class="section street-culture" id="street">
+    <div class="street-left">
+      <span class="section-label">STREET CULTURE</span>
+      <h2 class="section-title">More Than Shoes.
+It's a Movement.</h2>
+      <p class="street-body">Sneaker culture didn't start in boardrooms. It was born on blacktops, in cyphers, and through the soles of those who dared to be different.</p>
+      <p class="street-body">Hip-hop made them loud. Skate culture made them raw. Basketball made them legendary.</p>
+      <div class="quote-block"><div class="quote-line"></div><p class="quote-text">"It's gotta be the shoes."
+— Spike Lee as Mars Blackmon</p></div>
+    </div>
+    <div class="street-right">
+      <div class="culture-img-1"><img src="assets/images/5_76.png" alt="Street"></div>
+      <div class="image-row">
+        <div class="img"><img src="assets/images/5_78.png" alt="Culture 2"></div>
+        <div class="img"><img src="assets/images/5_79.png" alt="Culture 3"></div>
+      </div>
+    </div>
+  </section>
+  <section class="section collabs" id="collabs">
+    <div class="collabs-header">
+      <div class="collabs-header-left">
+        <span class="section-label">ICONIC COLLABS</span>
+        <h2 class="section-title">When Worlds Collide</h2>
+      </div>
+      <p class="collabs-subtitle">The partnerships that
+rewrote sneaker history</p>
+    </div>
+    <div class="collab-grid">
+      <div class="collab-col">
+        <div class="collab-card"><div class="card-visual"><img src="assets/images/5_91.png" alt="Virgil Abloh"></div><div class="card-info"><div class="collab-tag"><span>NIKE</span></div><span class="collab-name">Virgil Abloh
+"The Ten"</span><p class="collab-desc">Deconstructed classics that redefined sneakers.</p></div></div>
+        <div class="collab-card"><div class="card-visual"><img src="assets/images/5_98.png" alt="Yeezy 350"></div><div class="card-info"><div class="collab-tag"><span>ADIDAS</span></div><span class="collab-name">Kanye West
+Yeezy 350</span><p class="collab-desc">The Boost revolution with Primeknit.</p></div></div>
+      </div>
+      <div class="collab-col">
+        <div class="collab-card"><div class="card-visual"><img src="assets/images/5_105.png" alt="Travis Scott AJ1"></div><div class="card-info"><div class="collab-tag"><span>NIKE</span></div><span class="collab-name">Travis Scott
+Air Jordan 1</span><p class="collab-desc">Reverse Swoosh. Cactus Jack. The 2020s icon.</p></div></div>
+        <div class="collab-card"><div class="card-visual"><img src="assets/images/5_112.png" alt="JJJJound"></div><div class="card-info"><div class="collab-tag"><span>NEW BALANCE</span></div><span class="collab-name">JJJJound
+990v3</span><p class="collab-desc">Montreal minimalism meets American craft.</p></div></div>
+      </div>
+      <div class="collab-col">
+        <div class="collab-card"><div class="card-visual"><img src="assets/images/5_119.png" alt="Supreme AF1"></div><div class="card-info"><div class="collab-tag"><span>NIKE</span></div><span class="collab-name">Supreme
+Air Force 1</span><p class="collab-desc">NYC streetwear OG meets the uptown classic.</p></div></div>
+        <div class="collab-card"><div class="card-visual"><img src="assets/images/5_126.png" alt="A Ma Maniere"></div><div class="card-info"><div class="collab-tag"><span>JORDAN</span></div><span class="collab-name">A Ma Maniere
+Air Jordan 3</span><p class="collab-desc">Premium materials meet Black cultural narrative.</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="section statement">
+    <div class="statement-line"></div>
+    <p class="statement-quote">"YOU CAN TELL A LOT ABOUT A PERSON
+BY WHAT THEY WEAR ON THEIR FEET."</p>
+    <span class="statement-attribution">— THE STREETS</span>
+  </section>
+  <footer class="section footer" id="about">
+    <div class="footer-top">
+      <div class="footer-brand"><div class="footer-logo">KICKS
+CULTURE</div><p class="footer-tagline">Every sole tells a story.
+Step into the culture.</p></div>
+      <div class="footer-links">
+        <div class="footer-col"><span class="footer-col-title">NAVIGATE</span><a href="#timeline">Timeline</a><a href="#street">Street Culture</a><a href="#collabs">Collaborations</a><a href="#">The Drop</a></div>
+        <div class="footer-col"><span class="footer-col-title">CONNECT</span><a href="#">Instagram</a><a href="#">Twitter / X</a><a href="#">Discord</a><a href="#">Newsletter</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span class="copyright">© 2026 KICKS CULTURE</span><div class="footer-badge"><span>MADE WITH ATTITUDE</span></div></div>
+  </footer>
+</div>
+<script>
+(function(){var w=1440,c=document.getElementById('canvas');function r(){var s=Math.min(window.innerWidth/w,1);c.style.transform='scale('+s+')';c.style.marginLeft=-(w*s/2)+'px';}window.addEventListener('resize',r);r();})();
+</script>
+</body>
+</html>
